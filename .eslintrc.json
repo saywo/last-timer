@@ -9,7 +9,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "prettier" //prettierは最後
+    "prettier" //prettierは最後 eslint --fix実行時にPrettierを利用したコードフォーマットが行われる
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -20,14 +20,13 @@
     "sourceType": "module"
   },
   "plugins": ["react-hooks", "react", "@typescript-eslint"],
-  // React のバージョンは自動検出に
   "settings": {
     "react": {
-      "version": "detect"
+      "version": "detect" // React のバージョンは自動検出に
     }
   },
+  "root": true, //このeslintrcがルート（親階層のeslintrcを拾わない）
   "rules": {
-    // TypeScirpt なので prop-types は要らない
-    "react/prop-types": "off"
+    "react/prop-types": "off" // TypeScirpt なので prop-types は要らない
   }
 }
