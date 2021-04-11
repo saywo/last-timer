@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 
 type contextValue = {
   signUp: any;
@@ -43,6 +43,19 @@ export const AuthProvider: React.VFC<Props> = ({ children }) => {
         setCurrentUser(user.uid);
       });
       history.push("/");
+      db.collection("users")
+        .add({
+          first: "Alan",
+          middle: "Mathison",
+          last: "Turing",
+          born: 1912,
+        })
+        .then((docRef) => {
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch((error) => {
+          console.error("Error adding document: ", error);
+        });
     } catch (error) {
       alert(error.message);
     }
