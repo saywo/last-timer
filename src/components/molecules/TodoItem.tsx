@@ -6,16 +6,29 @@ type Props = {
   date: string | undefined;
   name: string | undefined;
   onClickRecord: any;
+  onClickDelete: any;
+  onChangeUpdateDate: any;
 };
 
-export const TodoItem: VFC<Props> = ({ id, name, date, onClickRecord }) => {
+export const TodoItem: VFC<Props> = ({
+  id,
+  name,
+  date,
+  onClickRecord,
+  onClickDelete,
+  onChangeUpdateDate,
+}) => {
   return (
     <SItem>
-      <SName>
-        {id},{name}
-      </SName>
-      <SDate type="date" defaultValue={date}></SDate>
-      <SRecord onClick={() => onClickRecord(id)}>記録する</SRecord>
+      <SName>{name}</SName>
+      <SDate
+        type="date"
+        onChange={() => onChangeUpdateDate(id)}
+        value={date}
+        defaultValue={date}
+      ></SDate>
+      <SRecord onClick={() => onClickRecord(id)}>今日やった</SRecord>
+      <SRecord onClick={() => onClickDelete(id)}>削除する</SRecord>
     </SItem>
   );
 };

@@ -32,11 +32,13 @@ export const Home: VFC = () => {
 
   const getTodos = useCallback(() => {
     const fetchData = async () => {
-      const temp: any = [];
+      let temp: any = [];
       await db
         .collection("todos")
         .where("uid", "==", `${currentUser}`)
         .onSnapshot((snapShot) => {
+          console.log(snapShot);
+          temp = [];
           snapShot.forEach((doc) => {
             const data = doc.data();
             temp.push({
@@ -47,7 +49,6 @@ export const Home: VFC = () => {
             });
           });
           setTodos(temp);
-          console.log(temp);
         });
       // .then(() => {
       //   setTodos(temp);
@@ -102,6 +103,34 @@ export const Home: VFC = () => {
       });
   }, []);
 
+  const onClickDelete = useCallback(async (id) => {
+    await db
+      .collection("todos")
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("delete!");
+      });
+  }, []);
+
+  const onChangeUpdateDate = useCallback(
+    async (e: ChangeEvent<HTMLInputElement>, id) => {
+      const date = e;
+      console.log(date);
+
+      await db
+        .collection("todos")
+        .doc(id)
+        .update({
+          date: date,
+        })
+        .then(() => {
+          console.log("date updated!");
+        });
+    },
+    []
+  );
+
   const onSubmitAdd = useCallback(
     (e) => {
       if (name !== "") {
@@ -153,6 +182,8 @@ export const Home: VFC = () => {
                 name={name}
                 date={date}
                 onClickRecord={onClickRecord}
+                onClickDelete={onClickDelete}
+                onChangeUpdateDate={onChangeUpdateDate}
               ></TodoItem>
             ))}
           </ul>
