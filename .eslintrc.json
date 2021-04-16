@@ -30,6 +30,7 @@
   },
   "root": true, //このeslintrcがルート（親階層のeslintrcを拾わない）
   "rules": {
+    "react/display-name": [0, { "ignoreTranspilerName": false }], //これないとmemoでエラー出る
     "react/prop-types": "off" // TypeScirpt なので prop-types は要らない
   }
 }

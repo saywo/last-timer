@@ -1,37 +1,68 @@
-import React, { VFC } from "react";
+import React, { useCallback, useEffect, VFC } from "react";
 import styled from "styled-components";
+import { db } from "../../firebase";
+
+const now = new Date();
+const nowDate = [
+  now.getFullYear(),
+  ("0" + (now.getMonth() + 1)).slice(-2),
+  ("0" + now.getDate()).slice(-2),
+].join("-");
 
 type Props = {
   id: string | undefined;
   date: string | undefined;
   name: string | undefined;
-  onClickRecord: any;
-  onClickDelete: any;
-  onChangeUpdateDate: any;
 };
 
-export const TodoItem: VFC<Props> = ({
-  id,
-  name,
-  date,
-  onClickRecord,
-  onClickDelete,
-  onChangeUpdateDate,
-}) => {
+export const TodoItem: VFC<Props> = React.memo(({ id, name, date }) => {
+  const onClickRecord = useCallback(async (id) => {
+    await db
+      .collection("todos")
+      .doc(id)
+      .update({
+        date: nowDate,
+      })
+      .then(() => {
+        console.log("update date !");
+      });
+  }, []);
+
+  const onClickDelete = useCallback(async (id) => {
+    const confirmResult: boolean = confirm("本当に削除しますか？");
+    if (confirmResult) {
+      await db
+        .collection("todos")
+        .doc(id)
+        .delete()
+        .then(() => {
+          console.log("delete!");
+        });
+    } else {
+      return false;
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log("itemです！");
+  });
+
   return (
     <SItem>
-      <SName>{name}</SName>
-      <SDate
-        type="date"
-        onChange={() => onChangeUpdateDate(id)}
-        value={date}
-        defaultValue={date}
-      ></SDate>
-      <SRecord onClick={() => onClickRecord(id)}>今日やった</SRecord>
-      <SRecord onClick={() => onClickDelete(id)}>削除する</SRecord>
+      <SName>
+        {id}
+        {name}
+      </SName>
+      <SDate>{date}</SDate>
+      <SButton className="today" onClick={() => onClickRecord(id)}>
+        今日やった
+      </SButton>
+      <SButton className="delete" onClick={() => onClickDelete(id)}>
+        削除する
+      </SButton>
     </SItem>
   );
-};
+});
 
 const SItem = styled.li`
   display: flex;
@@ -46,12 +77,20 @@ const SName = styled.p`
   padding: 10px;
 `;
 
-const SDate = styled.input`
-  border: 1px solid #efefef;
+const SDate = styled.p`
+  padding: 10px;
 `;
 
-const SRecord = styled.button`
-  background-color: #333;
-  color: #fff;
-  padding: 5px 10px;
+const SButton = styled.button`
+  font-weight: bold;
+  border-radius: 100px;
+  padding: 10px 20px;
+  &.today {
+    background-color: #fff;
+    border: 1px solid #333;
+  }
+  &.delete {
+    background-color: red;
+    color: #fff;
+  }
 `;
