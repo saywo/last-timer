@@ -11,11 +11,20 @@ const nowDate = [
 
 type Props = {
   id: string | undefined;
-  date: string | undefined;
-  name: string | undefined;
+  date: string;
+  name: string;
 };
 
 export const TodoItem: VFC<Props> = React.memo(({ id, name, date }) => {
+  const splitedLastDate = date.split("-");
+  const lastYear: number = parseInt(splitedLastDate[0]),
+    lastMonth = parseInt(splitedLastDate[1]),
+    lastDay = parseInt(splitedLastDate[2]);
+
+  const lastDate = new Date(lastYear, lastMonth, lastDay);
+  console.log(lastDate);
+  // const gap = (now - lastDate) / (1000 * 60 * 60 * 24);
+
   const onClickRecord = useCallback(async (id) => {
     await db
       .collection("todos")
@@ -54,6 +63,7 @@ export const TodoItem: VFC<Props> = React.memo(({ id, name, date }) => {
         {name}
       </SName>
       <SDate>{date}</SDate>
+      {/* <SSince>{lastDate}</SSince> */}
       <SButton className="today" onClick={() => onClickRecord(id)}>
         今日やった
       </SButton>
@@ -78,6 +88,12 @@ const SName = styled.p`
 `;
 
 const SDate = styled.p`
+  padding: 10px;
+  min-width: 150px;
+  text-align: center;
+`;
+
+const SSince = styled.p`
   padding: 10px;
 `;
 

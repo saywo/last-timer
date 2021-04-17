@@ -9,6 +9,9 @@ import { AuthContext } from "../../auth/AuthProvider";
 import { db } from "../../firebase";
 import styled from "styled-components";
 import { TodosContext } from "../../state/TodosProvider";
+import { AddInput } from "../molecules/AddInput";
+import { AddButton } from "../atoms/button/AddButton";
+import { SButton } from "../atoms/button/AddButton";
 
 const now = new Date();
 const nowDate = [
@@ -54,16 +57,38 @@ export const AddItem: VFC = () => {
   );
 
   return (
-    <form onSubmit={onSubmitAdd}>
-      <label htmlFor="name">名前</label>
-      <SInput id="name" type="text" onChange={onChangeName} value={name} />
-      <label htmlFor="date">日付</label>
-      <SInput id="date" type="date" onChange={onChangeDate} value={date} />
-      <button type="submit">追加</button>
-    </form>
+    <SFormWrapper>
+      <SForm onSubmit={onSubmitAdd}>
+        <AddInput
+          labelName="名前"
+          type="text"
+          value={name}
+          onChange={onChangeName}
+          required
+        />
+        <AddInput
+          labelName="日付"
+          type="date"
+          value={date}
+          onChange={onChangeDate}
+          required
+        />
+        <AddButton />
+      </SForm>
+    </SFormWrapper>
   );
 };
 
-const SInput = styled.input`
-  border: 1px solid #ccc;
+const SForm = styled.form`
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+  ${SButton} {
+    margin-left: 100px;
+  }
+`;
+
+const SFormWrapper = styled.div`
+  background-color: #ededed;
+  padding: 20px 0px;
 `;
