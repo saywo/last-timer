@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from "react";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
-import { PrimaryButton } from "../../atoms/button/PrimaryButton";
+import HeaderButton from "../../atoms/button/HeaderButton";
 import { AuthContext } from "../../../auth/AuthProvider";
 
 export const Header: React.FC = () => {
@@ -10,13 +10,13 @@ export const Header: React.FC = () => {
   const history = useHistory();
   const onClickSignin = useCallback((): void => {
     history.push("/signin");
-  }, []);
+  }, [history]);
   const onClickSignup = useCallback((): void => {
     history.push("/signup");
-  }, []);
+  }, [history]);
   const onClickSignout = useCallback((): void => {
     signOut(history);
-  }, []);
+  }, [history, signOut]);
 
   return (
     <SHeader>
@@ -26,13 +26,13 @@ export const Header: React.FC = () => {
         </SHeaderLogo>
         <SHeaderContent>
           {isSignedIn || (
-            <PrimaryButton onClick={onClickSignup}>登録</PrimaryButton>
+            <HeaderButton onClick={onClickSignup}>登録</HeaderButton>
           )}
           {isSignedIn || (
-            <PrimaryButton onClick={onClickSignin}>ログイン</PrimaryButton>
+            <HeaderButton onClick={onClickSignin}>ログイン</HeaderButton>
           )}
           {isSignedIn && (
-            <PrimaryButton onClick={onClickSignout}>ログアウト</PrimaryButton>
+            <HeaderButton onClick={onClickSignout}>ログアウト</HeaderButton>
           )}
         </SHeaderContent>
       </SHeaderInner>
@@ -42,17 +42,21 @@ export const Header: React.FC = () => {
 
 const SHeader = styled.header`
   /* height: 80px; */
-  /* background-color: #ccc; */
-  border-bottom: 1px solid #ccc;
+  background-color: #333;
 `;
 const SHeaderInner = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 40px;
   height: 100%;
 `;
-const SHeaderLogo = styled.div``;
+const SHeaderLogo = styled.div`
+  color: #fff;
+  font-weight: bold;
+`;
 const SHeaderContent = styled.div`
   button + button {
     margin-left: 20px;

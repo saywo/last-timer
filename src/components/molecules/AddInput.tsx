@@ -9,16 +9,17 @@ type Props = InputProps & {
 export const AddInput: React.VFC<Props> = memo(
   ({ labelName, ...inputProps }) => {
     return (
-      <label>
+      <SLabel>
         <SLabelName>{labelName}</SLabelName>
         <SInput {...inputProps} />
-      </label>
+      </SLabel>
     );
   }
 );
 
 const SLabelName = styled.span`
   font-weight: bold;
+  white-space: nowrap;
   & + * {
     margin-left: 5px;
   }
@@ -27,5 +28,13 @@ const SLabelName = styled.span`
 const SInput = styled.input`
   border: 1px solid #ccc;
   background-color: #fff;
-  padding: 5px;
+  border-radius: 10px;
+  padding: 5px 10px;
+  min-height: 36px;
+  width: 100%;
+`;
+
+const SLabel = styled.label`
+  display: flex;
+  align-items: center;
 `;

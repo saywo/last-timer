@@ -1,5 +1,6 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { auth, db } from "../firebase";
+import * as H from "history";
 
 type contextValue = {
   signUp: any;
@@ -24,14 +25,18 @@ export const AuthProvider: React.VFC<Props> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
 
-  const signUp = async (email: string, password: string, history: any) => {
+  const signUp = async (
+    email: string,
+    password: string,
+    history: H.History
+  ) => {
     try {
       await auth.createUserWithEmailAndPassword(email, password);
       auth.onAuthStateChanged((user: any): void => {
         setCurrentUser(user.uid);
       });
       history.push("/");
-    } catch (error) {
+    } catch (error: any) {
       alert(error.message);
     }
   };
@@ -43,19 +48,19 @@ export const AuthProvider: React.VFC<Props> = ({ children }) => {
         setCurrentUser(user.uid);
       });
       history.push("/");
-      db.collection("users")
-        .add({
-          first: "Alan",
-          middle: "Mathison",
-          last: "Turing",
-          born: 1912,
-        })
-        .then((docRef) => {
-          console.log("Document written with ID: ", docRef.id);
-        })
-        .catch((error) => {
-          console.error("Error adding document: ", error);
-        });
+      // db.collection("users")
+      //   .add({
+      //     first: "Alan",
+      //     middle: "Mathison",
+      //     last: "Turing",
+      //     born: 1912,
+      //   })
+      //   .then((docRef) => {
+      //     console.log("Document written with ID: ", docRef.id);
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error adding document: ", error);
+      //   });
     } catch (error) {
       alert(error.message);
     }

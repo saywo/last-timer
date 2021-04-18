@@ -1,6 +1,5 @@
 import React, { useContext, VFC, useEffect } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
-import styled from "styled-components";
 import { db } from "../../firebase";
 import { TodosContext } from "../../state/TodosProvider";
 import { AddItem } from "../organisms/AddItem";
@@ -15,6 +14,7 @@ export const Home: VFC = () => {
     await db
       .collection("todos")
       .where("uid", "==", `${currentUser}`)
+      // .orderBy("createdAt")
       .onSnapshot((snapShot) => {
         // console.log(snapShot);
         temp = [];
@@ -37,8 +37,8 @@ export const Home: VFC = () => {
 
   return (
     <>
-      {currentUser && <p>currentUser uid:{currentUser}</p>}
-      <p>isSingedIn:{isSignedIn.toString()}</p>
+      {/* {currentUser && <p>currentUser uid:{currentUser}</p>}
+      <p>isSingedIn:{isSignedIn.toString()}</p> */}
       {isSignedIn && (
         <>
           <AddItem />

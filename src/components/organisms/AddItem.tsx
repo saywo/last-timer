@@ -6,7 +6,7 @@ import React, {
   VFC,
 } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
-import { db } from "../../firebase";
+import { db, firebaseTimestamp } from "../../firebase";
 import styled from "styled-components";
 import { TodosContext } from "../../state/TodosProvider";
 import { AddInput } from "../molecules/AddInput";
@@ -37,7 +37,12 @@ export const AddItem: VFC = () => {
   const onSubmitAdd = useCallback(
     (e) => {
       if (name !== "") {
-        const newTodo = { uid: currentUser, name: name, date: date };
+        const newTodo = {
+          uid: currentUser,
+          name: name,
+          date: date,
+          createdAt: firebaseTimestamp.now(),
+        };
         db.collection("todos")
           .add(newTodo)
           .then((docRef) => {
@@ -83,12 +88,15 @@ const SForm = styled.form`
   max-width: 1000px;
   margin: 0 auto;
   padding: 0 20px;
-  ${SButton} {
-    margin-left: 100px;
-  }
+  display: grid;
+  grid-template-columns: 1fr 1fr 80px 1fr;
+  grid-gap: 20px;
 `;
 
 const SFormWrapper = styled.div`
   background-color: #ededed;
   padding: 20px 0px;
+  position: sticky;
+  top: 0;
+  left: 0;
 `;

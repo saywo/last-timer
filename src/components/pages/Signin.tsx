@@ -6,10 +6,11 @@ import React, {
   useContext,
 } from "react";
 import { HeadingA } from "../atoms/text/HeadingA";
-import { InputItem } from "../molecules/InputItem";
-import { InputArea } from "../molecules/InputArea";
+import { InputItemAuth } from "../molecules/InputItemAuth";
+import { InputListAuth } from "../molecules/InputListAuth";
 import { AuthContext } from "../../auth/AuthProvider";
 import { useHistory } from "react-router";
+import AuthButton from "../atoms/button/AuthButton";
 
 export const Signin: VFC = () => {
   const [email, setEmail] = useState(""),
@@ -29,32 +30,28 @@ export const Signin: VFC = () => {
     },
     [setPassword]
   );
-  const { signIn, currentUser, isSignedIn } = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
 
   return (
     <>
       <HeadingA>Signin</HeadingA>
-      <InputArea>
-        <InputItem
-          label="メールアドレス"
-          id="email"
+      <InputListAuth>
+        <InputItemAuth
+          labelName="メールアドレス"
           type="email"
           value={email}
           onChange={onChangeEmail}
         />
-        <InputItem
-          label="パスワード"
-          id="password"
+        <InputItemAuth
+          labelName="パスワード"
           type="password"
           value={password}
           onChange={onChangePassword}
         />
-      </InputArea>
-      <button onClick={() => signIn(email, password, history)}>sign in</button>
-      <div>email:{email}</div>
-      <div>password:{password}</div>
-      <p>currentUser:{currentUser}</p>
-      <p>isSingedIn:{isSignedIn.toString()}</p>
+        <AuthButton onClick={() => signIn(email, password, history)}>
+          ログイン
+        </AuthButton>
+      </InputListAuth>
     </>
   );
 };

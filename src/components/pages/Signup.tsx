@@ -6,10 +6,11 @@ import React, {
   useContext,
 } from "react";
 import { HeadingA } from "../atoms/text/HeadingA";
-import { InputItem } from "../molecules/InputItem";
-import { InputArea } from "../molecules/InputArea";
+import { InputItemAuth } from "../molecules/InputItemAuth";
+import { InputListAuth } from "../molecules/InputListAuth";
 import { AuthContext } from "../../auth/AuthProvider";
 import { useHistory } from "react-router";
+import AuthButton from "../atoms/button/AuthButton";
 
 export const Signup: VFC = () => {
   const [name, setName] = useState(""),
@@ -43,46 +44,35 @@ export const Signup: VFC = () => {
     },
     [setPasswordConfirm]
   );
-  const { signUp, currentUser, isSignedIn } = useContext(AuthContext);
+  const { signUp } = useContext(AuthContext);
 
   return (
     <>
       <HeadingA>Signup</HeadingA>
-      <InputArea>
-        <InputItem
-          label="名前"
-          id="name"
-          value={name}
-          onChange={onChangeName}
-        />
-        <InputItem
-          label="メールアドレス"
-          id="email"
+      <InputListAuth>
+        <InputItemAuth labelName="名前" value={name} onChange={onChangeName} />
+        <InputItemAuth
+          labelName="メールアドレス"
           type="email"
           value={email}
           onChange={onChangeEmail}
         />
-        <InputItem
-          label="パスワード"
-          id="password"
+        <InputItemAuth
+          labelName="パスワード"
           type="password"
           value={password}
           onChange={onChangePassword}
         />
-        <InputItem
-          label="パスワード（確認用）"
-          id="passwordconfirm"
+        <InputItemAuth
+          labelName="パスワード（確認用）"
           type="password"
           value={passwordConfirm}
           onChange={onChangePasswordConfirm}
         />
-      </InputArea>
-      <button onClick={() => signUp(email, password, history)}>sign up</button>
-      <div>name:{name}</div>
-      <div>email:{email}</div>
-      <div>password:{password}</div>
-      <p>currentUser:{currentUser}</p>
-      <p>isSingedIn:{isSignedIn.toString()}</p>
+        <AuthButton onClick={() => signUp(email, password, history)}>
+          登録
+        </AuthButton>
+      </InputListAuth>
     </>
   );
 };

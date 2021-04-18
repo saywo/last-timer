@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, VFC } from "react";
 import styled from "styled-components";
 import { db } from "../../firebase";
+import TodoButton from "../atoms/button/TodoButton";
 
 const now = new Date();
 const nowDate = [
@@ -16,14 +17,10 @@ type Props = {
 };
 
 export const TodoItem: VFC<Props> = React.memo(({ id, name, date }) => {
-  const splitedLastDate = date.split("-");
-  const lastYear: number = parseInt(splitedLastDate[0]),
-    lastMonth = parseInt(splitedLastDate[1]),
-    lastDay = parseInt(splitedLastDate[2]);
-
-  const lastDate = new Date(lastYear, lastMonth, lastDay);
-  console.log(lastDate);
-  // const gap = (now - lastDate) / (1000 * 60 * 60 * 24);
+  const d1 =
+    (new Date(date).getTime() + 60 * 60 * 9 * 1000) / (60 * 60 * 24 * 1000);
+  const d2 = (now.getTime() + 60 * 60 * 9 * 1000) / (60 * 60 * 24 * 1000);
+  const timeGapInt = Math.floor(d2 - d1).toString();
 
   const onClickRecord = useCallback(async (id) => {
     await db
@@ -58,55 +55,41 @@ export const TodoItem: VFC<Props> = React.memo(({ id, name, date }) => {
 
   return (
     <SItem>
-      <SName>
-        {id}
-        {name}
-      </SName>
+      <SName>{name}</SName>
       <SDate>{date}</SDate>
-      {/* <SSince>{lastDate}</SSince> */}
-      <SButton className="today" onClick={() => onClickRecord(id)}>
+      <SSince>{timeGapInt}日</SSince>
+      <TodoButton className="record_today" onClick={() => onClickRecord(id)}>
         今日やった
-      </SButton>
-      <SButton className="delete" onClick={() => onClickDelete(id)}>
+      </TodoButton>
+      <TodoButton className="delete" onClick={() => onClickDelete(id)}>
         削除する
-      </SButton>
+      </TodoButton>
     </SItem>
   );
 });
 
 const SItem = styled.li`
-  display: flex;
-  & + & {
-    margin-top: 10px;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  align-items: start;
+  padding: 10px 0;
+  &:hover {
+    background-color: #f7f7f7;
   }
 `;
 
 const SName = styled.p`
   min-width: 200px;
-  background-color: #efefef;
   padding: 10px;
+  word-break: break-all;
 `;
 
 const SDate = styled.p`
   padding: 10px;
   min-width: 150px;
-  text-align: center;
 `;
 
 const SSince = styled.p`
   padding: 10px;
-`;
-
-const SButton = styled.button`
-  font-weight: bold;
-  border-radius: 100px;
-  padding: 10px 20px;
-  &.today {
-    background-color: #fff;
-    border: 1px solid #333;
-  }
-  &.delete {
-    background-color: red;
-    color: #fff;
-  }
 `;

@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Footer from "../components/organisms/layout/Footer";
 import { Header } from "../components/organisms/layout/Header";
 import { Home } from "../components/pages/Home";
 import { Signin } from "../components/pages/Signin";
@@ -9,11 +10,14 @@ export const Router = () => {
   return (
     <BrowserRouter>
       <Header />
-      <Switch>
-        <Route exact path="/" component={Home}></Route>
-        <Route exact path="/signup" component={Signup}></Route>
-        <Route exact path="/signin" component={Signin}></Route>
-      </Switch>
+      <main id="main">
+        <Switch>
+          <Route exact path="/" component={Home}></Route>
+          <Route exact path="/signup" component={Signup}></Route>
+          <Route exact path="/signin" component={Signin}></Route>
+        </Switch>
+      </main>
+      <Footer />
     </BrowserRouter>
   );
 };

@@ -6,24 +6,13 @@ export const AddButton: VFC = () => {
 };
 
 export const SButton = styled.button`
-  border: 1px solid #000;
-  background-color: #000;
+  background-color: #60caad;
+  border-radius: 10px;
   color: #fff;
   font-weight: bold;
-  padding: 5px;
-  /* padding: 5px 5px 5px 20px; */
-  /* position: relative;
-  &::before,
-  &::after {
-    position: absolute;
-    top: 50%;
-    left: 5px;
-    content: "";
-    width: 10px;
-    height: 1px;
-    background-color: #fff;
+  padding: 10px 20px;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: #0fc190;
   }
-  &::after {
-    transform: rotate(90deg);
-  } */
 `;
