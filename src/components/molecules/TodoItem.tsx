@@ -1,7 +1,9 @@
-import React, { useCallback, useEffect, VFC } from "react";
+import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { db } from "../../firebase";
-import TodoButton from "../atoms/button/TodoButton";
+import { TodoButton } from "../atoms/button/TodoButton";
+import { colors } from "../../styles/const/colors";
+import { mediaQuery } from "../../styles/const/size";
 
 const now = new Date();
 const nowDate = [
@@ -16,7 +18,7 @@ type Props = {
   name: string;
 };
 
-export const TodoItem: VFC<Props> = React.memo(({ id, name, date }) => {
+export const TodoItem: React.VFC<Props> = React.memo(({ id, name, date }) => {
   const d1 =
     (new Date(date).getTime() + 60 * 60 * 9 * 1000) / (60 * 60 * 24 * 1000);
   const d2 = (now.getTime() + 60 * 60 * 9 * 1000) / (60 * 60 * 24 * 1000);
@@ -58,9 +60,13 @@ export const TodoItem: VFC<Props> = React.memo(({ id, name, date }) => {
       <SName>{name}</SName>
       <SDate>{date}</SDate>
       <SSince>{timeGapInt}日</SSince>
-      <TodoButton className="record_today" onClick={() => onClickRecord(id)}>
-        今日やった
-      </TodoButton>
+      {nowDate !== date ? (
+        <TodoButton className="record_today" onClick={() => onClickRecord(id)}>
+          今日やった
+        </TodoButton>
+      ) : (
+        <div></div>
+      )}
       <TodoButton className="delete" onClick={() => onClickDelete(id)}>
         削除する
       </TodoButton>
@@ -71,25 +77,50 @@ export const TodoItem: VFC<Props> = React.memo(({ id, name, date }) => {
 const SItem = styled.li`
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
   align-items: start;
-  padding: 10px 0;
+  padding: 10px;
+  border-bottom: 1px solid ${colors.gray03};
   &:hover {
-    background-color: #f7f7f7;
+    background-color: ${colors.gray04};
+  }
+  grid-template-columns: calc((100% - 10px) / 2) calc((100% - 10px) / 2);
+  grid-template-areas:
+    "name name"
+    "date since"
+    ". . ";
+  ${mediaQuery.md} {
+    grid-template-rows: 1fr;
+  }
+  ${mediaQuery.lg} {
+    grid-template-areas: "name date since . .";
+    grid-template-columns: 2fr 1fr 0.5fr 1fr 1fr;
   }
 `;
 
-const SName = styled.p`
+const SItemData = styled.p`
+  padding: 5px 0;
+  ${mediaQuery.lg} {
+    padding: 10px 0;
+    word-break: break-all;
+  }
+`;
+
+const SName = styled(SItemData)`
   min-width: 200px;
-  padding: 10px;
-  word-break: break-all;
+  grid-area: name;
+  font-weight: bold;
+  font-size: 20px;
+  ${mediaQuery.lg} {
+    font-size: 16px;
+    font-weight: normal;
+  }
 `;
 
-const SDate = styled.p`
-  padding: 10px;
+const SDate = styled(SItemData)`
   min-width: 150px;
+  grid-area: date;
 `;
 
-const SSince = styled.p`
-  padding: 10px;
+const SSince = styled(SItemData)`
+  grid-area: since;
 `;

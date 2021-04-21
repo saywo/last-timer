@@ -2,8 +2,10 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { TodosContext } from "../../state/TodosProvider";
 import { TodoItem } from "../molecules/TodoItem";
+import { colors } from "../../styles/const/colors";
+import { mediaQuery } from "../../styles/const/size";
 
-export const TodoList: React.VFC = () => {
+export const TodoList: React.VFC = React.memo(() => {
   const { todos } = useContext(TodosContext);
   return (
     <STodoInner>
@@ -21,17 +23,20 @@ export const TodoList: React.VFC = () => {
       </STodoList>
     </STodoInner>
   );
-};
+});
 
 const STodoHead = styled.ul`
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-  grid-gap: 10px;
-  padding: 20px 0;
+  display: none;
+  ${mediaQuery.lg} {
+    display: grid;
+    grid-template-columns: 2fr 1fr 0.5fr 1fr 1fr;
+    grid-gap: 10px;
+    padding: 20px 10px;
+    border-bottom: 1px solid ${colors.gray03};
+  }
 `;
 
 const STodoHeadItem = styled.li`
-  padding: 0 10px;
   font-weight: bold;
 `;
 
@@ -42,6 +47,10 @@ const STodoList = styled.ul`
 
 const STodoInner = styled.div`
   max-width: 1000px;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 20px 40px;
+  padding: 0 10px 20px;
+  ${mediaQuery.md} {
+    padding: 0 20px 40px;
+  }
 `;

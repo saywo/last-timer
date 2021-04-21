@@ -5,14 +5,15 @@ import React, {
   ChangeEvent,
   useContext,
 } from "react";
-import { HeadingA } from "../atoms/text/HeadingA";
 import { InputItemAuth } from "../molecules/InputItemAuth";
 import { InputListAuth } from "../molecules/InputListAuth";
 import { AuthContext } from "../../auth/AuthProvider";
-import { useHistory } from "react-router";
+import { Link, useHistory } from "react-router-dom";
 import AuthButton from "../atoms/button/AuthButton";
+import { BlackBg } from "../templates/BlackBg";
+import styled from "styled-components";
 
-export const Signin: VFC = () => {
+export const Signin: VFC = React.memo(() => {
   const [email, setEmail] = useState(""),
     [password, setPassword] = useState("");
 
@@ -33,25 +34,50 @@ export const Signin: VFC = () => {
   const { signIn } = useContext(AuthContext);
 
   return (
-    <>
-      <HeadingA>Signin</HeadingA>
-      <InputListAuth>
+    <BlackBg>
+      <InputListAuth
+        onSubmit={(e) => {
+          e.preventDefault();
+          signIn(email, password, history);
+        }}
+      >
         <InputItemAuth
           labelName="メールアドレス"
           type="email"
           value={email}
           onChange={onChangeEmail}
+          required
         />
         <InputItemAuth
           labelName="パスワード"
           type="password"
           value={password}
           onChange={onChangePassword}
+          required
         />
-        <AuthButton onClick={() => signIn(email, password, history)}>
-          ログイン
-        </AuthButton>
+        <AuthButton value="ログイン"></AuthButton>
+        <SLinkWrap>
+          <Link
+            to={{
+              pathname: "/resetpassword",
+              state: { email },
+            }}
+          >
+            パスワードを忘れましたか？
+          </Link>
+        </SLinkWrap>
       </InputListAuth>
-    </>
+    </BlackBg>
   );
-};
+});
+
+const SLinkWrap = styled.div`
+  text-align: right;
+  a {
+    font-size: 14px;
+    transition: opacity 0.2s;
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+`;

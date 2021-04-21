@@ -5,6 +5,7 @@ type Props = {
 };
 
 type TodosProps = {
+  uid: string | null;
   id: string;
   name: string;
   date: string;
@@ -12,7 +13,7 @@ type TodosProps = {
 
 type contextValue = {
   todos: Array<TodosProps>;
-  setTodos:any;
+  setTodos: any;
 };
 
 export const TodosContext = createContext({} as contextValue);

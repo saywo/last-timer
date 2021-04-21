@@ -1,11 +1,17 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
-import { auth, db } from "../firebase";
+import { auth } from "../firebase";
 import * as H from "history";
 
 type contextValue = {
-  signUp: any;
-  signIn: any;
-  signOut: any;
+  signUp: (
+    email: string,
+    password: string,
+    passwordConfirm: string,
+    history: H.History
+  ) => void;
+  signIn: (email: string, password: string, history: H.History) => void;
+  resetPassword: (email: string, history: H.History) => void;
+  signOut: (history: H.History) => void;
   currentUser: string | null;
   isSignedIn: boolean;
 };
@@ -16,57 +22,61 @@ type Props = {
   children: ReactNode;
 };
 
-// interface ChildComponent extends RouteComponentProps {
-//   email: string;
-//   password: string;
-// }
-
-export const AuthProvider: React.VFC<Props> = ({ children }) => {
+export const AuthProvider: React.VFC<Props> = React.memo(({ children }) => {
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
 
   const signUp = async (
     email: string,
     password: string,
+    passwordConfirm: string,
     history: H.History
   ) => {
     try {
+      if (password !== passwordConfirm) {
+        throw new Error("確認用パスワードが正しくありません。");
+      }
       await auth.createUserWithEmailAndPassword(email, password);
       auth.onAuthStateChanged((user: any): void => {
         setCurrentUser(user.uid);
       });
       history.push("/");
-    } catch (error: any) {
+    } catch (error) {
       alert(error.message);
+      console.log(error);
     }
   };
 
-  const signIn = async (email: string, password: string, history: any) => {
+  const signIn = async (
+    email: string,
+    password: string,
+    history: H.History
+  ) => {
     try {
       await auth.signInWithEmailAndPassword(email, password);
       auth.onAuthStateChanged((user: any): void => {
         setCurrentUser(user.uid);
       });
       history.push("/");
-      // db.collection("users")
-      //   .add({
-      //     first: "Alan",
-      //     middle: "Mathison",
-      //     last: "Turing",
-      //     born: 1912,
-      //   })
-      //   .then((docRef) => {
-      //     console.log("Document written with ID: ", docRef.id);
-      //   })
-      //   .catch((error) => {
-      //     console.error("Error adding document: ", error);
-      //   });
     } catch (error) {
-      alert(error.message);
+      alert("ご入力いただいた情報が正しくありません");
+      console.log(error.message);
     }
   };
 
-  const signOut = (history: any) => {
+  const resetPassword = async (email: string, history: H.History) => {
+    await auth
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        alert("パスワードリセットのためのメールを送信しました。");
+        history.push("/signin");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const signOut = (history: H.History) => {
     auth.signOut();
     setCurrentUser(null);
     setIsSignedIn(false);
@@ -90,6 +100,7 @@ export const AuthProvider: React.VFC<Props> = ({ children }) => {
       value={{
         signUp,
         signIn,
+        resetPassword,
         signOut,
         currentUser,
         isSignedIn,
@@ -98,4 +109,4 @@ export const AuthProvider: React.VFC<Props> = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
+});

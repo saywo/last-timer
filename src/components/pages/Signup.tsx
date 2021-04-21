@@ -5,27 +5,27 @@ import React, {
   ChangeEvent,
   useContext,
 } from "react";
-import { HeadingA } from "../atoms/text/HeadingA";
 import { InputItemAuth } from "../molecules/InputItemAuth";
 import { InputListAuth } from "../molecules/InputListAuth";
 import { AuthContext } from "../../auth/AuthProvider";
 import { useHistory } from "react-router";
 import AuthButton from "../atoms/button/AuthButton";
+import { BlackBg } from "../templates/BlackBg";
 
-export const Signup: VFC = () => {
-  const [name, setName] = useState(""),
-    [email, setEmail] = useState(""),
-    [password, setPassword] = useState(""),
-    [passwordConfirm, setPasswordConfirm] = useState("");
+export const Signup: VFC = React.memo(() => {
+  // const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const history = useHistory();
 
-  const onChangeName = useCallback(
-    (e: ChangeEvent<HTMLInputElement>): void => {
-      setName(e.target.value);
-    },
-    [setName]
-  );
+  // const onChangeName = useCallback(
+  //   (e: ChangeEvent<HTMLInputElement>): void => {
+  //     setName(e.target.value);
+  //   },
+  //   [setName]
+  // );
   const onChangeEmail = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       setEmail(e.target.value);
@@ -47,32 +47,42 @@ export const Signup: VFC = () => {
   const { signUp } = useContext(AuthContext);
 
   return (
-    <>
-      <HeadingA>Signup</HeadingA>
-      <InputListAuth>
-        <InputItemAuth labelName="名前" value={name} onChange={onChangeName} />
+    <BlackBg>
+      <InputListAuth
+        onSubmit={(e) => {
+          e.preventDefault();
+          signUp(email, password, passwordConfirm, history);
+        }}
+      >
+        {/* <InputItemAuth
+          labelName="名前"
+          value={name}
+          onChange={onChangeName}
+          required
+        /> */}
         <InputItemAuth
           labelName="メールアドレス"
           type="email"
           value={email}
           onChange={onChangeEmail}
+          required
         />
         <InputItemAuth
           labelName="パスワード"
           type="password"
           value={password}
           onChange={onChangePassword}
+          required
         />
         <InputItemAuth
           labelName="パスワード（確認用）"
           type="password"
           value={passwordConfirm}
           onChange={onChangePasswordConfirm}
+          required
         />
-        <AuthButton onClick={() => signUp(email, password, history)}>
-          登録
-        </AuthButton>
+        <AuthButton value="登録"></AuthButton>
       </InputListAuth>
-    </>
+    </BlackBg>
   );
-};
+});

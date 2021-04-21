@@ -1,12 +1,13 @@
-import React from "react";
+import React, { VFC } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Footer from "../components/organisms/layout/Footer";
 import { Header } from "../components/organisms/layout/Header";
 import { Home } from "../components/pages/Home";
 import { Signin } from "../components/pages/Signin";
 import { Signup } from "../components/pages/Signup";
+import { ResetPassword } from "../components/pages/ResetPassword";
 
-export const Router = () => {
+export const Router: VFC = React.memo(() => {
   return (
     <BrowserRouter>
       <Header />
@@ -15,9 +16,10 @@ export const Router = () => {
           <Route exact path="/" component={Home}></Route>
           <Route exact path="/signup" component={Signup}></Route>
           <Route exact path="/signin" component={Signin}></Route>
+          <Route exact path="/resetpassword" component={ResetPassword}></Route>
         </Switch>
       </main>
       <Footer />
     </BrowserRouter>
   );
-};
+});

@@ -1,32 +1,51 @@
 import React, { ReactNode } from "react";
 import styled from "styled-components";
+import { colors } from "../../../styles/const/colors";
+import { mediaQuery } from "../../../styles/const/size";
 
-type Props = {
+type InputProps = Omit<JSX.IntrinsicElements["button"], "ref">;
+type Props = InputProps & {
+  buttonType?: "default" | "cv";
   children: ReactNode;
-  // buttonType: "transparent" | "white";
-  onClick?: () => void;
 };
 
 const HeaderButton: React.VFC<Props> = ({
+  buttonType = "default",
   children,
-  // buttonType = "transparent",
-  onClick,
+  ...inputProps
 }) => {
-  return <SButton onClick={onClick}>{children}</SButton>;
+  return (
+    <SButton className={buttonType} {...inputProps}>
+      {children}
+    </SButton>
+  );
 };
 
 const SButton = styled.button`
-  border: 1px solid #e9e9e9;
-  color: #fff;
   border-radius: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: calc((10em / 14)) calc((20em / 14));
+  font-size: 14px;
   font-weight: bold;
   outline: none;
   transition: background-color 0.2s, color 0.2s;
-  &:hover {
-    background-color: #e9e9e9;
-    color: #333;
+  ${mediaQuery.md} {
+    font-size: 16px;
+  }
+  &.default {
+    border: 1px solid ${colors.gray02};
+    color: ${colors.white01};
+    &:hover {
+      background-color: ${colors.gray02};
+      color: ${colors.black01};
+    }
+  }
+  &.cv {
+    background-color: ${colors.blue01};
+    border: 1px solid ${colors.blue01};
+    color: ${colors.white01};
+    &:hover {
+      background-color: ${colors.blue01Active};
+    }
   }
 `;
 

@@ -1,7 +1,8 @@
 import React, { VFC } from "react";
 import styled from "styled-components";
+import { colors } from "../../../styles/const/colors";
 
-const Footer: VFC = () => {
+const Footer: VFC = React.memo(() => {
   return (
     <SFooter>
       <SFooterInner>
@@ -11,10 +12,10 @@ const Footer: VFC = () => {
       </SFooterInner>
     </SFooter>
   );
-};
+});
 
 const SFooter = styled.footer`
-  background-color: #333;
+  background-color: ${colors.black01};
   padding: 20px 0;
 `;
 
@@ -25,7 +26,7 @@ const SFooterInner = styled.div`
 `;
 
 const SFooterCopy = styled.p`
-  color: #fff;
+  color: ${colors.white01};
   text-align: center;
 `;
 

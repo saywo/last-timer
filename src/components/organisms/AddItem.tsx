@@ -11,7 +11,8 @@ import styled from "styled-components";
 import { TodosContext } from "../../state/TodosProvider";
 import { AddInput } from "../molecules/AddInput";
 import { AddButton } from "../atoms/button/AddButton";
-import { SButton } from "../atoms/button/AddButton";
+import { colors } from "../../styles/const/colors";
+import { mediaQuery } from "../../styles/const/size";
 
 const now = new Date();
 const nowDate = [
@@ -20,7 +21,7 @@ const nowDate = [
   ("0" + now.getDate()).slice(-2),
 ].join("-");
 
-export const AddItem: VFC = () => {
+export const AddItem: VFC = React.memo(() => {
   const { currentUser } = useContext(AuthContext);
   const { todos, setTodos } = useContext(TodosContext);
   const [name, setName] = useState<string>("");
@@ -49,6 +50,8 @@ export const AddItem: VFC = () => {
             //stateの配列には、firestoreの配列にfirestoreのdocIdを追加
             const updatedTodos = [...todos, { ...newTodo, id: docRef.id }];
             setTodos(updatedTodos);
+            setName("");
+            setDate(nowDate);
           })
           .catch((error) => {
             console.error(error);
@@ -58,7 +61,7 @@ export const AddItem: VFC = () => {
       }
       return e.preventDefault();
     },
-    [name, date, todos]
+    [currentUser, name, date, todos, setName, setDate, setTodos]
   );
 
   return (
@@ -82,21 +85,27 @@ export const AddItem: VFC = () => {
       </SForm>
     </SFormWrapper>
   );
-};
+});
 
 const SForm = styled.form`
   max-width: 1000px;
   margin: 0 auto;
   padding: 0 20px;
   display: grid;
-  grid-template-columns: 1fr 1fr 80px 1fr;
-  grid-gap: 20px;
+  grid-gap: 10px;
+  ${mediaQuery.md} {
+    padding: 0 30px;
+    grid-template-columns: 1fr 1fr 80px 1fr;
+    grid-gap: 20px;
+  }
 `;
 
 const SFormWrapper = styled.div`
-  background-color: #ededed;
+  background-color: ${colors.gray03};
   padding: 20px 0px;
-  position: sticky;
-  top: 0;
-  left: 0;
+  ${mediaQuery.md} {
+    position: sticky;
+    top: 0;
+    left: 0;
+  }
 `;
