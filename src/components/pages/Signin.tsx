@@ -62,10 +62,25 @@ export const Signin: VFC = React.memo(() => {
               pathname: "/resetpassword",
               state: { email },
             }}
+            className="reset-password"
           >
             パスワードを忘れましたか？
           </Link>
         </SLinkWrap>
+        <STestUserInfo>
+          <p className="test-user_title">テストユーザー用のログイン情報</p>
+          <p className="test-user_desc">登録不要で本サービスをお試し頂けます。</p>
+          <div className="test-user_list">
+            <dl className="test-user_item">
+              <dt className="test-user_name">メールアドレス</dt>
+              <dd className="test-user_content">test@gmail.com</dd>
+            </dl>
+            <dl className="test-user_item">
+              <dt className="test-user_name">パスワード</dt>
+              <dd className="test-user_content">testpassword54321</dd>
+            </dl>
+          </div>
+        </STestUserInfo>
       </InputListAuth>
     </BlackBg>
   );
@@ -73,11 +88,37 @@ export const Signin: VFC = React.memo(() => {
 
 const SLinkWrap = styled.div`
   text-align: right;
-  a {
+  .reset-password {
     font-size: 14px;
     transition: opacity 0.2s;
     &:hover {
       opacity: 0.6;
     }
+  }
+`;
+
+const STestUserInfo = styled.div`
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+  .test-user_title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .test-user_desc {
+    font-size: 14px;
+  }
+  .test-user_list {
+    margin-top: 20px;
+  }
+  .test-user_item {
+    font-size: 14px;
+    & + .test-user_item {
+      margin-top: 20px;
+    }
+  }
+  .test-user_name {
+  }
+  .test-user_content {
+    margin-top: 5px;
   }
 `;
