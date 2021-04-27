@@ -14,6 +14,7 @@ export const TodoButton: React.VFC<Props> = React.memo(
 );
 
 const SButton = styled.button`
+  width: 100%;
   font-weight: bold;
   border-radius: 10px;
   padding: 10px 20px;

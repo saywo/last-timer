@@ -61,15 +61,22 @@ export const TodoItem: React.VFC<Props> = React.memo(({ id, name, date }) => {
       <SDate>{date}</SDate>
       <SSince>{timeGapInt}日</SSince>
       {nowDate !== date ? (
-        <TodoButton className="record_today" onClick={() => onClickRecord(id)}>
-          今日やった
-        </TodoButton>
+        <SButtonWrap>
+          <TodoButton
+            className="record_today"
+            onClick={() => onClickRecord(id)}
+          >
+            今日やった
+          </TodoButton>
+        </SButtonWrap>
       ) : (
         <div></div>
       )}
-      <TodoButton className="delete" onClick={() => onClickDelete(id)}>
-        削除する
-      </TodoButton>
+      <SButtonWrap>
+        <TodoButton className="delete" onClick={() => onClickDelete(id)}>
+          削除する
+        </TodoButton>
+      </SButtonWrap>
     </SItem>
   );
 });
@@ -123,4 +130,8 @@ const SDate = styled(SItemData)`
 
 const SSince = styled(SItemData)`
   grid-area: since;
+`;
+
+const SButtonWrap = styled.div`
+  padding: 4.5px 0;
 `;
