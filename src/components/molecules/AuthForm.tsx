@@ -1,14 +1,13 @@
 import React, { VFC, ReactNode, memo } from "react";
 import styled from "styled-components";
-import { colors } from "../../styles/const/colors";
-import { mediaQuery } from "../../styles/const/size";
+import { colors, mediaQuery } from "../../styles/index";
 
 type Props = {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   children: ReactNode;
 };
 
-export const InputListAuth: VFC<Props> = memo(({ children, onSubmit }) => {
+export const AuthForm: VFC<Props> = memo(({ children, onSubmit }) => {
   return (
     <SFormBox className="auth_formBox">
       <SForm className="auth_form" onSubmit={onSubmit}>

@@ -13,7 +13,7 @@ type TodosProps = {
 
 type contextValue = {
   todos: Array<TodosProps>;
-  setTodos: any;
+  setTodos: (todos: Array<TodosProps>) => void;
 };
 
 export const TodosContext = createContext({} as contextValue);

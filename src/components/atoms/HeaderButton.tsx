@@ -1,7 +1,6 @@
 import React, { VFC, ReactNode } from "react";
 import styled from "styled-components";
-import { colors } from "../../../styles/const/colors";
-import { mediaQuery } from "../../../styles/const/size";
+import { colors, mediaQuery } from "../../styles/index";
 
 type InputProps = Omit<JSX.IntrinsicElements["button"], "ref">;
 type Props = InputProps & {

@@ -1,10 +1,9 @@
 import React, { useCallback, useContext, memo } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import HeaderButton from "../../atoms/button/HeaderButton";
+import HeaderButton from "../../atoms/HeaderButton";
 import { AuthContext } from "../../../auth/AuthProvider";
-import { colors } from "../../../styles/const/colors";
-import { mediaQuery } from "../../../styles/const/size";
+import { colors, mediaQuery } from "../../../styles/index";
 
 export const Header: React.FC = memo(() => {
   const { isSignedIn, signOut } = useContext(AuthContext);

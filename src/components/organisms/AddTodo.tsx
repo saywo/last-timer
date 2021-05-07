@@ -10,10 +10,9 @@ import { AuthContext } from "../../auth/AuthProvider";
 import { db, firebaseTimestamp } from "../../firebase";
 import styled from "styled-components";
 import { TodosContext } from "../../state/TodosProvider";
-import { AddInput } from "../molecules/AddInput";
-import { AddButton } from "../atoms/button/AddButton";
-import { colors } from "../../styles/const/colors";
-import { mediaQuery } from "../../styles/const/size";
+import { AddTodoInput } from "../molecules/AddTodoInput";
+import { AddTodoButton } from "../atoms/AddTodoButton";
+import { colors, mediaQuery } from "../../styles/index";
 
 const now = new Date();
 const nowDate = [
@@ -22,7 +21,7 @@ const nowDate = [
   ("0" + now.getDate()).slice(-2),
 ].join("-");
 
-export const AddItem: VFC = memo(() => {
+export const AddTodo: VFC = memo(() => {
   const { currentUser } = useContext(AuthContext);
   const { todos, setTodos } = useContext(TodosContext);
   const [name, setName] = useState<string>("");
@@ -68,14 +67,14 @@ export const AddItem: VFC = memo(() => {
   return (
     <SFormWrapper>
       <SForm onSubmit={onSubmitAdd}>
-        <AddInput
+        <AddTodoInput
           labelName="名前"
           type="text"
           value={name}
           onChange={onChangeName}
           required
         />
-        <AddInput
+        <AddTodoInput
           labelName="日付"
           type="date"
           max={nowDate}
@@ -83,7 +82,7 @@ export const AddItem: VFC = memo(() => {
           onChange={onChangeDate}
           required
         />
-        <AddButton />
+        <AddTodoButton />
       </SForm>
     </SFormWrapper>
   );

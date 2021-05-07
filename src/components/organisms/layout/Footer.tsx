@@ -1,6 +1,6 @@
 import React, { VFC, memo } from "react";
 import styled from "styled-components";
-import { colors } from "../../../styles/const/colors";
+import { colors } from "../../../styles/index";
 
 const Footer: VFC = memo(() => {
   return (

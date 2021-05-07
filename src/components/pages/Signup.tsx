@@ -6,12 +6,12 @@ import React, {
   useContext,
   memo,
 } from "react";
-import { InputItemAuth } from "../molecules/InputItemAuth";
-import { InputListAuth } from "../molecules/InputListAuth";
-import { AuthContext } from "../../auth/AuthProvider";
 import { useHistory } from "react-router";
-import AuthButton from "../atoms/button/AuthButton";
+import { AuthInput } from "../atoms/AuthInput";
+import { AuthButtonSubmit } from "../atoms/AuthButtonSubmit";
+import { AuthForm } from "../molecules/AuthForm";
 import { BlackBg } from "../templates/BlackBg";
+import { AuthContext } from "../../auth/AuthProvider";
 
 export const Signup: VFC = memo(() => {
   // const [name, setName] = useState("");
@@ -49,41 +49,41 @@ export const Signup: VFC = memo(() => {
 
   return (
     <BlackBg>
-      <InputListAuth
+      <AuthForm
         onSubmit={(e) => {
           e.preventDefault();
           signUp(email, password, passwordConfirm, history);
         }}
       >
-        {/* <InputItemAuth
+        {/* <AuthInput
           labelName="名前"
           value={name}
           onChange={onChangeName}
           required
         /> */}
-        <InputItemAuth
+        <AuthInput
           labelName="メールアドレス"
           type="email"
           value={email}
           onChange={onChangeEmail}
           required
         />
-        <InputItemAuth
+        <AuthInput
           labelName="パスワード"
           type="password"
           value={password}
           onChange={onChangePassword}
           required
         />
-        <InputItemAuth
+        <AuthInput
           labelName="パスワード（確認用）"
           type="password"
           value={passwordConfirm}
           onChange={onChangePasswordConfirm}
           required
         />
-        <AuthButton value="登録"></AuthButton>
-      </InputListAuth>
+        <AuthButtonSubmit value="登録"></AuthButtonSubmit>
+      </AuthForm>
     </BlackBg>
   );
 });

@@ -1,9 +1,8 @@
 import React, { VFC, useCallback, memo } from "react";
 import styled from "styled-components";
 import { db } from "../../firebase";
-import { TodoButton } from "../atoms/button/TodoButton";
-import { colors } from "../../styles/const/colors";
-import { mediaQuery } from "../../styles/const/size";
+import { TodoButton } from "../atoms/TodoButton";
+import { colors, mediaQuery } from "../../styles/index";
 
 const now = new Date();
 const nowDate = [

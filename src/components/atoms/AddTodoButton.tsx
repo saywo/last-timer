@@ -1,8 +1,8 @@
 import React, { VFC, memo } from "react";
 import styled from "styled-components";
-import { colors } from "../../../styles/const/colors";
+import { colors } from "../../styles/index";
 
-export const AddButton: VFC = memo(() => {
+export const AddTodoButton: VFC = memo(() => {
   return <SButton type="submit">追加</SButton>;
 });
 

@@ -6,12 +6,12 @@ import React, {
   useContext,
   memo,
 } from "react";
-import { InputItemAuth } from "../molecules/InputItemAuth";
-import { InputListAuth } from "../molecules/InputListAuth";
-import { AuthContext } from "../../auth/AuthProvider";
+import { AuthInput } from "../atoms/AuthInput";
+import { AuthButtonSubmit } from "../atoms/AuthButtonSubmit";
+import { AuthForm } from "../molecules/AuthForm";
 import { Link, useHistory } from "react-router-dom";
-import AuthButton from "../atoms/button/AuthButton";
 import { BlackBg } from "../templates/BlackBg";
+import { AuthContext } from "../../auth/AuthProvider";
 import styled from "styled-components";
 
 export const Signin: VFC = memo(() => {
@@ -36,27 +36,27 @@ export const Signin: VFC = memo(() => {
 
   return (
     <BlackBg>
-      <InputListAuth
+      <AuthForm
         onSubmit={(e) => {
           e.preventDefault();
           signIn(email, password, history);
         }}
       >
-        <InputItemAuth
+        <AuthInput
           labelName="メールアドレス"
           type="email"
           value={email}
           onChange={onChangeEmail}
           required
         />
-        <InputItemAuth
+        <AuthInput
           labelName="パスワード"
           type="password"
           value={password}
           onChange={onChangePassword}
           required
         />
-        <AuthButton value="ログイン"></AuthButton>
+        <AuthButtonSubmit value="ログイン"></AuthButtonSubmit>
         <SLinkWrap>
           <Link
             to={{
@@ -84,7 +84,7 @@ export const Signin: VFC = memo(() => {
             </dl>
           </div>
         </STestUserInfo>
-      </InputListAuth>
+      </AuthForm>
     </BlackBg>
   );
 });

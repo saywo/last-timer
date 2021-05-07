@@ -1,13 +1,13 @@
 import React, { VFC, memo } from "react";
 import styled from "styled-components";
-import { colors } from "../../styles/const/colors";
+import { colors } from "../../styles/index";
 
 type InputProps = Omit<JSX.IntrinsicElements["input"], "ref">;
 type Props = InputProps & {
   labelName: string;
 };
 
-export const AddInput: VFC<Props> = memo(({ labelName, ...inputProps }) => {
+export const AddTodoInput: VFC<Props> = memo(({ labelName, ...inputProps }) => {
   return (
     <SLabel>
       <SLabelName>{labelName}</SLabelName>

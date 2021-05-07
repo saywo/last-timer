@@ -2,12 +2,11 @@ import React, { useContext, VFC, useEffect, memo } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import { db } from "../../firebase";
 import { TodosContext } from "../../state/TodosProvider";
-import { AddItem } from "../organisms/AddItem";
+import { AddTodo } from "../organisms/AddTodo";
 import { TodoList } from "../organisms/TodoList";
 import { BlackBg } from "../templates/BlackBg";
 import styled from "styled-components";
-import { colors } from "../../styles/const/colors";
-import { mediaQuery } from "../../styles/const/size";
+import { colors, mediaQuery } from "../../styles/index";
 
 export const Home: VFC = memo(() => {
   const { currentUser, isSignedIn } = useContext(AuthContext);
@@ -45,7 +44,7 @@ export const Home: VFC = memo(() => {
       <p>isSingedIn:{isSignedIn.toString()}</p> */}
       {isSignedIn ? (
         <>
-          <AddItem />
+          <AddTodo />
           <TodoList />
         </>
       ) : (

@@ -1,12 +1,11 @@
 import React, { VFC, memo } from "react";
 import styled from "styled-components";
-import { colors } from "../../../styles/const/colors";
-import { mediaQuery } from "../../../styles/const/size";
+import { colors, mediaQuery } from "../../styles/index";
 
 type InputProps = Omit<JSX.IntrinsicElements["input"], "ref">;
 type Props = InputProps;
 
-export const AuthButton: VFC<Props> = memo(({ ...inputProps }) => {
+export const AuthButtonSubmit: VFC<Props> = memo(({ ...inputProps }) => {
   return <SButton type="submit" {...inputProps} />;
 });
 
@@ -28,5 +27,3 @@ const SButton = styled.input`
     }
   }
 `;
-
-export default AuthButton;

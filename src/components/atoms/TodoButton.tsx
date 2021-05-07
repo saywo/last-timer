@@ -1,6 +1,6 @@
 import React, { VFC, ReactNode, memo } from "react";
 import styled from "styled-components";
-import { colors } from "../../../styles/const/colors";
+import { colors } from "../../styles/index";
 
 type ButtonProps = Omit<JSX.IntrinsicElements["button"], "ref">;
 type Props = ButtonProps & {

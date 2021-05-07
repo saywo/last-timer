@@ -6,12 +6,12 @@ import React, {
   useContext,
   memo,
 } from "react";
-import { InputItemAuth } from "../molecules/InputItemAuth";
-import { InputListAuth } from "../molecules/InputListAuth";
-import { AuthContext } from "../../auth/AuthProvider";
 import { useHistory, useLocation } from "react-router-dom";
-import AuthButton from "../atoms/button/AuthButton";
+import { AuthInput } from "../atoms/AuthInput";
+import { AuthButtonSubmit } from "../atoms/AuthButtonSubmit";
+import { AuthForm } from "../molecules/AuthForm";
 import { BlackBg } from "../templates/BlackBg";
+import { AuthContext } from "../../auth/AuthProvider";
 
 export const ResetPassword: VFC = memo(() => {
   type LocationStateType = {
@@ -32,21 +32,21 @@ export const ResetPassword: VFC = memo(() => {
 
   return (
     <BlackBg>
-      <InputListAuth
+      <AuthForm
         onSubmit={(e) => {
           e.preventDefault();
           resetPassword(email, history);
         }}
       >
-        <InputItemAuth
+        <AuthInput
           labelName="メールアドレス"
           type="email"
           value={email}
           onChange={onChangeEmail}
           required
         />
-        <AuthButton value="パスワード再設定メールを送信"></AuthButton>
-      </InputListAuth>
+        <AuthButtonSubmit value="パスワード再設定メールを送信"></AuthButtonSubmit>
+      </AuthForm>
     </BlackBg>
   );
 });

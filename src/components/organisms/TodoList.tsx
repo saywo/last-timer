@@ -2,8 +2,7 @@ import React, { VFC, useContext, memo } from "react";
 import styled from "styled-components";
 import { TodosContext } from "../../state/TodosProvider";
 import { TodoItem } from "../molecules/TodoItem";
-import { colors } from "../../styles/const/colors";
-import { mediaQuery } from "../../styles/const/size";
+import { colors, mediaQuery } from "../../styles/index";
 
 export const TodoList: VFC = memo(() => {
   const { todos, setTodos } = useContext(TodosContext);
