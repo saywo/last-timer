@@ -57,7 +57,7 @@ export const TodoItem: VFC<Props> = memo(({ id, name, date }) => {
 
   return (
     <SItem>
-      <SName></SName>
+      <SName>{name}</SName>
       <SDate>{date}</SDate>
       <SSince>{timeGapInt}日</SSince>
       {nowDate !== date ? (
