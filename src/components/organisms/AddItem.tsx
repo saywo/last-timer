@@ -77,6 +77,7 @@ export const AddItem: VFC = React.memo(() => {
         <AddInput
           labelName="日付"
           type="date"
+          max={nowDate}
           value={date}
           onChange={onChangeDate}
           required
