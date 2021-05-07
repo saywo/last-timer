@@ -59,7 +59,10 @@ export const TodoItem: VFC<Props> = memo(({ id, name, date }) => {
     <SItem>
       <SName>{name}</SName>
       <SDate>{date}</SDate>
-      <SSince>{timeGapInt}日</SSince>
+      <SSince>
+        <span className="label">前回から：</span>
+        {timeGapInt}日
+      </SSince>
       {nowDate !== date ? (
         <SButtonWrap>
           <TodoButton
@@ -83,8 +86,9 @@ export const TodoItem: VFC<Props> = memo(({ id, name, date }) => {
 
 const SItem = styled.li`
   display: grid;
-  grid-gap: 10px;
   align-items: start;
+  grid-column-gap: 10px;
+  grid-row-gap: 5px;
   padding: 10px;
   border-bottom: 1px solid ${colors.gray03};
   &:hover {
@@ -93,9 +97,11 @@ const SItem = styled.li`
   grid-template-columns: calc((100% - 10px) / 2) calc((100% - 10px) / 2);
   grid-template-areas:
     "name name"
-    "date since"
+    "date date"
+    "since since "
     ". . ";
   ${mediaQuery.md} {
+    grid-row-gap: 10px;
     grid-template-rows: 1fr;
   }
   ${mediaQuery.lg} {
@@ -105,7 +111,7 @@ const SItem = styled.li`
 `;
 
 const SItemData = styled.p`
-  padding: 5px 0;
+  /* padding: 5px 0; */
   ${mediaQuery.lg} {
     padding: 10px 0;
     word-break: break-all;
@@ -130,6 +136,11 @@ const SDate = styled(SItemData)`
 
 const SSince = styled(SItemData)`
   grid-area: since;
+  .label {
+    ${mediaQuery.lg} {
+      display: none;
+    }
+  }
 `;
 
 const SButtonWrap = styled.div`
