@@ -6,6 +6,7 @@ import React, {
   useState,
   memo,
 } from "react";
+import firebase from "firebase/app";
 import { auth } from "../firebase";
 import * as H from "history";
 
@@ -44,8 +45,10 @@ export const AuthProvider: VFC<Props> = memo(({ children }) => {
         throw new Error("確認用パスワードが正しくありません。");
       }
       await auth.createUserWithEmailAndPassword(email, password);
-      auth.onAuthStateChanged((user: any): void => {
-        setCurrentUser(user.uid);
+      auth.onAuthStateChanged((user: firebase.User | null): void => {
+        if (user !== null) {
+          setCurrentUser(user.uid);
+        }
       });
       history.push("/");
     } catch (error) {
@@ -61,8 +64,10 @@ export const AuthProvider: VFC<Props> = memo(({ children }) => {
   ) => {
     try {
       await auth.signInWithEmailAndPassword(email, password);
-      auth.onAuthStateChanged((user: any): void => {
-        setCurrentUser(user.uid);
+      auth.onAuthStateChanged((user: firebase.User | null): void => {
+        if (user !== null) {
+          setCurrentUser(user.uid);
+        }
       });
       history.push("/");
     } catch (error) {
