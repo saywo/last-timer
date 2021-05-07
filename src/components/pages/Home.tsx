@@ -1,6 +1,6 @@
 import React, { useContext, VFC, useEffect, memo } from "react";
-import { AuthContext } from "../../auth/AuthProvider";
 import { db } from "../../firebase";
+import { AuthContext } from "../../auth/AuthProvider";
 import { TodosContext } from "../../state/TodosProvider";
 import { AddTodo } from "../organisms/AddTodo";
 import { TodoList } from "../organisms/TodoList";
@@ -50,7 +50,7 @@ export const Home: VFC = memo(() => {
       ) : (
         <BlackBg>
           <SHome>
-            <h1>前回からの日数リスト</h1>
+            <h1>経過日数リスト</h1>
             <p>「最後に歯医者に行ったのいつだっけ...？」</p>
             <p>
               定期的にあるけど、
@@ -58,13 +58,12 @@ export const Home: VFC = memo(() => {
               忘れがちなイベントってありますよね。
             </p>
             <p>
-              このアプリは、
+              このアプリでは、そういった
               <br className="sm-show" />
-              そういった
               <span className="strong">
                 定期的にあるけど忘れがちなイベントを記録
               </span>
-              することに特化しています。
+              しておけます。
             </p>
           </SHome>
         </BlackBg>
@@ -80,7 +79,7 @@ const SHome = styled.div`
   padding-top: 60px;
   h1 {
     font-weight: bold;
-    font-size: calc((30 / 375) * 100vw);
+    font-size: 30px;
     ${mediaQuery.md} {
       font-size: 40px;
     }

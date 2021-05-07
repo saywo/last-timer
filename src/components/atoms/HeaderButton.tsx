@@ -8,7 +8,7 @@ type Props = InputProps & {
   children: ReactNode;
 };
 
-const HeaderButton: VFC<Props> = ({
+export const HeaderButton: VFC<Props> = ({
   buttonType = "default",
   children,
   ...inputProps
@@ -47,5 +47,3 @@ const SButton = styled.button`
     }
   }
 `;
-
-export default HeaderButton;

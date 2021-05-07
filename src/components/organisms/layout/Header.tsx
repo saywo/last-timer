@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, memo } from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
-import HeaderButton from "../../atoms/HeaderButton";
+import { Link, useHistory } from "react-router-dom";
+import { HeaderButton } from "../../atoms/HeaderButton";
 import { AuthContext } from "../../../auth/AuthProvider";
 import { colors, mediaQuery } from "../../../styles/index";
 
@@ -22,9 +22,9 @@ export const Header: React.FC = memo(() => {
   return (
     <SHeader>
       <SHeaderInner>
-        {/* <SHeaderLogo>
-          <Link to="/">homeへ</Link>
-        </SHeaderLogo> */}
+        <SHeaderLogo>
+          <Link to="/">home</Link>
+        </SHeaderLogo>
         <SHeaderContent>
           {isSignedIn || (
             <HeaderButton buttonType="cv" onClick={onClickSignup}>
@@ -50,7 +50,7 @@ const SHeader = styled.header`
 const SHeaderInner = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto;
   height: 100%;
@@ -59,10 +59,10 @@ const SHeaderInner = styled.div`
     padding: 10px 40px;
   }
 `;
-// const SHeaderLogo = styled.div`
-//   color: ${colors.white01};
-//   font-weight: bold;
-// `;
+const SHeaderLogo = styled.div`
+  color: ${colors.white01};
+  font-weight: bold;
+`;
 const SHeaderContent = styled.div`
   button + button {
     margin-left: 10px;
