@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { VFC, ReactNode, memo } from "react";
 import styled from "styled-components";
 import { colors } from "../../styles/const/colors";
 import { mediaQuery } from "../../styles/const/size";
@@ -8,17 +8,15 @@ type Props = {
   children: ReactNode;
 };
 
-export const InputListAuth: React.VFC<Props> = React.memo(
-  ({ children, onSubmit }) => {
-    return (
-      <SFormBox className="auth_formBox">
-        <SForm className="auth_form" onSubmit={onSubmit}>
-          {children}
-        </SForm>
-      </SFormBox>
-    );
-  }
-);
+export const InputListAuth: VFC<Props> = memo(({ children, onSubmit }) => {
+  return (
+    <SFormBox className="auth_formBox">
+      <SForm className="auth_form" onSubmit={onSubmit}>
+        {children}
+      </SForm>
+    </SFormBox>
+  );
+});
 const SFormBox = styled.div`
   border: 1px solid #ccc;
   background-color: ${colors.white01};

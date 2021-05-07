@@ -1,8 +1,8 @@
-import React, { VFC } from "react";
+import React, { VFC, memo } from "react";
 import styled from "styled-components";
 import { colors } from "../../../styles/const/colors";
 
-const Footer: VFC = React.memo(() => {
+const Footer: VFC = memo(() => {
   return (
     <SFooter>
       <SFooterInner>

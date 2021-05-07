@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { VFC, ReactNode } from "react";
 import styled from "styled-components";
 import { colors } from "../../../styles/const/colors";
 import { mediaQuery } from "../../../styles/const/size";
@@ -9,7 +9,7 @@ type Props = InputProps & {
   children: ReactNode;
 };
 
-const HeaderButton: React.VFC<Props> = ({
+const HeaderButton: VFC<Props> = ({
   buttonType = "default",
   children,
   ...inputProps

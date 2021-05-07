@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { VFC, useCallback, memo } from "react";
 import styled from "styled-components";
 import { db } from "../../firebase";
 import { TodoButton } from "../atoms/button/TodoButton";
@@ -18,7 +18,7 @@ type Props = {
   name: string;
 };
 
-export const TodoItem: React.VFC<Props> = React.memo(({ id, name, date }) => {
+export const TodoItem: VFC<Props> = memo(({ id, name, date }) => {
   const d1 =
     (new Date(date).getTime() + 60 * 60 * 9 * 1000) / (60 * 60 * 24 * 1000);
   const d2 = (now.getTime() + 60 * 60 * 9 * 1000) / (60 * 60 * 24 * 1000);
@@ -51,13 +51,13 @@ export const TodoItem: React.VFC<Props> = React.memo(({ id, name, date }) => {
     }
   }, []);
 
-  useEffect(() => {
-    console.log("itemです！");
-  });
+  // useEffect(() => {
+  //   console.log("itemです！");
+  // });
 
   return (
     <SItem>
-      <SName>{name}</SName>
+      <SName></SName>
       <SDate>{date}</SDate>
       <SSince>{timeGapInt}日</SSince>
       {nowDate !== date ? (

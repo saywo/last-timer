@@ -1,4 +1,4 @@
-import React from "react";
+import React, { VFC, memo } from "react";
 import styled from "styled-components";
 import { colors } from "../../../styles/const/colors";
 import { mediaQuery } from "../../../styles/const/size";
@@ -6,7 +6,7 @@ import { mediaQuery } from "../../../styles/const/size";
 type InputProps = Omit<JSX.IntrinsicElements["input"], "ref">;
 type Props = InputProps;
 
-export const AuthButton: React.VFC<Props> = React.memo(({ ...inputProps }) => {
+export const AuthButton: VFC<Props> = memo(({ ...inputProps }) => {
   return <SButton type="submit" {...inputProps} />;
 });
 

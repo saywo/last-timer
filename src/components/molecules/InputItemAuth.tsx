@@ -1,4 +1,4 @@
-import React from "react";
+import React, { VFC, memo } from "react";
 import styled from "styled-components";
 import { colors } from "../../styles/const/colors";
 
@@ -9,7 +9,7 @@ type Props = InputProps & {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const InputItemAuth: React.VFC<Props> = React.memo(
+export const InputItemAuth: VFC<Props> = memo(
   ({ labelName, type = "text", onChange, ...inputProps }) => {
     return (
       <SLabel>

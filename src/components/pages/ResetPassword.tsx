@@ -4,6 +4,7 @@ import React, {
   VFC,
   ChangeEvent,
   useContext,
+  memo,
 } from "react";
 import { InputItemAuth } from "../molecules/InputItemAuth";
 import { InputListAuth } from "../molecules/InputListAuth";
@@ -12,7 +13,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import AuthButton from "../atoms/button/AuthButton";
 import { BlackBg } from "../templates/BlackBg";
 
-export const ResetPassword: VFC = React.memo(() => {
+export const ResetPassword: VFC = memo(() => {
   type LocationStateType = {
     email: string;
   };

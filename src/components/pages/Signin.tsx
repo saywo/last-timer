@@ -4,6 +4,7 @@ import React, {
   VFC,
   ChangeEvent,
   useContext,
+  memo,
 } from "react";
 import { InputItemAuth } from "../molecules/InputItemAuth";
 import { InputListAuth } from "../molecules/InputListAuth";
@@ -13,7 +14,7 @@ import AuthButton from "../atoms/button/AuthButton";
 import { BlackBg } from "../templates/BlackBg";
 import styled from "styled-components";
 
-export const Signin: VFC = React.memo(() => {
+export const Signin: VFC = memo(() => {
   const [email, setEmail] = useState(""),
     [password, setPassword] = useState("");
 
@@ -69,7 +70,9 @@ export const Signin: VFC = React.memo(() => {
         </SLinkWrap>
         <STestUserInfo>
           <p className="test-user_title">テストユーザー用のログイン情報</p>
-          <p className="test-user_desc">登録不要で本サービスをお試し頂けます。</p>
+          <p className="test-user_desc">
+            登録不要で本サービスをお試し頂けます。
+          </p>
           <div className="test-user_list">
             <dl className="test-user_item">
               <dt className="test-user_name">メールアドレス</dt>

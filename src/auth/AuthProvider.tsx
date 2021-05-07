@@ -1,4 +1,11 @@
-import React, { createContext, ReactNode, useEffect, useState } from "react";
+import React, {
+  VFC,
+  createContext,
+  ReactNode,
+  useEffect,
+  useState,
+  memo,
+} from "react";
 import { auth } from "../firebase";
 import * as H from "history";
 
@@ -22,7 +29,7 @@ type Props = {
   children: ReactNode;
 };
 
-export const AuthProvider: React.VFC<Props> = React.memo(({ children }) => {
+export const AuthProvider: VFC<Props> = memo(({ children }) => {
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
 

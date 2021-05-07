@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { VFC, ReactNode, memo } from "react";
 import styled from "styled-components";
 import { colors } from "../../../styles/const/colors";
 
@@ -7,11 +7,9 @@ type Props = ButtonProps & {
   children: ReactNode;
 };
 
-export const TodoButton: React.VFC<Props> = React.memo(
-  ({ children, ...buttonProps }) => {
-    return <SButton {...buttonProps}>{children}</SButton>;
-  }
-);
+export const TodoButton: VFC<Props> = memo(({ children, ...buttonProps }) => {
+  return <SButton {...buttonProps}>{children}</SButton>;
+});
 
 const SButton = styled.button`
   width: 100%;

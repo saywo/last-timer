@@ -4,6 +4,7 @@ import React, {
   VFC,
   ChangeEvent,
   useContext,
+  memo,
 } from "react";
 import { InputItemAuth } from "../molecules/InputItemAuth";
 import { InputListAuth } from "../molecules/InputListAuth";
@@ -12,7 +13,7 @@ import { useHistory } from "react-router";
 import AuthButton from "../atoms/button/AuthButton";
 import { BlackBg } from "../templates/BlackBg";
 
-export const Signup: VFC = React.memo(() => {
+export const Signup: VFC = memo(() => {
   // const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

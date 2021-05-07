@@ -1,17 +1,28 @@
-import React, { useContext } from "react";
+import React, { VFC, useContext, memo } from "react";
 import styled from "styled-components";
 import { TodosContext } from "../../state/TodosProvider";
 import { TodoItem } from "../molecules/TodoItem";
 import { colors } from "../../styles/const/colors";
 import { mediaQuery } from "../../styles/const/size";
 
-export const TodoList: React.VFC = React.memo(() => {
-  const { todos } = useContext(TodosContext);
+export const TodoList: VFC = memo(() => {
+  const { todos, setTodos } = useContext(TodosContext);
+  const onClickSortDate = () => {
+    setTodos(
+      todos.sort((a, b) => {
+        if (a.date > b.date) {
+          return 1;
+        } else {
+          return -1;
+        }
+      })
+    );
+  };
   return (
     <STodoInner>
       <STodoHead>
         <STodoHeadItem>名前</STodoHeadItem>
-        <STodoHeadItem>日付</STodoHeadItem>
+        <STodoHeadItem onClick={onClickSortDate}>日付</STodoHeadItem>
         <STodoHeadItem>前回から</STodoHeadItem>
       </STodoHead>
       <STodoList>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { VFC, memo } from "react";
 import styled from "styled-components";
 import { colors } from "../../styles/const/colors";
 
@@ -7,16 +7,14 @@ type Props = InputProps & {
   labelName: string;
 };
 
-export const AddInput: React.VFC<Props> = React.memo(
-  ({ labelName, ...inputProps }) => {
-    return (
-      <SLabel>
-        <SLabelName>{labelName}</SLabelName>
-        <SInput className="SInput" {...inputProps} />
-      </SLabel>
-    );
-  }
-);
+export const AddInput: VFC<Props> = memo(({ labelName, ...inputProps }) => {
+  return (
+    <SLabel>
+      <SLabelName>{labelName}</SLabelName>
+      <SInput className="SInput" {...inputProps} />
+    </SLabel>
+  );
+});
 
 const SLabelName = styled.span`
   font-weight: bold;

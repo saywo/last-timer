@@ -1,4 +1,4 @@
-import React, { useContext, VFC, useEffect } from "react";
+import React, { useContext, VFC, useEffect, memo } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import { db } from "../../firebase";
 import { TodosContext } from "../../state/TodosProvider";
@@ -9,7 +9,7 @@ import styled from "styled-components";
 import { colors } from "../../styles/const/colors";
 import { mediaQuery } from "../../styles/const/size";
 
-export const Home: VFC = React.memo(() => {
+export const Home: VFC = memo(() => {
   const { currentUser, isSignedIn } = useContext(AuthContext);
   const { todos, setTodos } = useContext(TodosContext);
 

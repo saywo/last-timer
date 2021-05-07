@@ -1,11 +1,11 @@
-import React, { ReactNode, VFC } from "react";
+import React, { ReactNode, VFC, memo } from "react";
 import styled from "styled-components";
 
 type Props = {
   children: ReactNode;
 };
 
-export const HeadingA: VFC<Props> = React.memo(({ children }) => {
+export const HeadingA: VFC<Props> = memo(({ children }) => {
   return <SHeading>{children}</SHeading>;
 });
 

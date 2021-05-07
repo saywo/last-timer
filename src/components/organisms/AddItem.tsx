@@ -4,6 +4,7 @@ import React, {
   useState,
   ChangeEvent,
   VFC,
+  memo,
 } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import { db, firebaseTimestamp } from "../../firebase";
@@ -21,7 +22,7 @@ const nowDate = [
   ("0" + now.getDate()).slice(-2),
 ].join("-");
 
-export const AddItem: VFC = React.memo(() => {
+export const AddItem: VFC = memo(() => {
   const { currentUser } = useContext(AuthContext);
   const { todos, setTodos } = useContext(TodosContext);
   const [name, setName] = useState<string>("");
