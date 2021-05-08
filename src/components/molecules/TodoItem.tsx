@@ -1,15 +1,10 @@
-import React, { VFC, useCallback, memo } from "react";
+import React, { VFC, useCallback, memo, useState } from "react";
 import styled from "styled-components";
 import { db } from "../../firebase";
 import { TodoButton } from "../atoms/TodoButton";
 import { colors, mediaQuery } from "../../styles/index";
-
-const now = new Date();
-const nowDate = [
-  now.getFullYear(),
-  ("0" + (now.getMonth() + 1)).slice(-2),
-  ("0" + now.getDate()).slice(-2),
-].join("-");
+import { TodoDate } from "../atoms/TodoDate";
+import { now, nowDate } from "../../const/index";
 
 type Props = {
   id: string | undefined;
@@ -23,6 +18,12 @@ export const TodoItem: VFC<Props> = memo(({ id, name, date }) => {
   const d2 = (now.getTime() + 60 * 60 * 9 * 1000) / (60 * 60 * 24 * 1000);
   const timeGapInt = Math.floor(d2 - d1).toString();
 
+  const [originalDate, setOriginalDate] = useState(date);
+
+  const onChangeUpdate = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setOriginalDate(e.target.value);
+  };
+
   const onClickRecord = useCallback(async (id) => {
     await db
       .collection("todos")
@@ -31,8 +32,9 @@ export const TodoItem: VFC<Props> = memo(({ id, name, date }) => {
         date: nowDate,
       })
       .then(() => {
-        console.log("update date !");
+        // console.log("update date !");
       });
+    setOriginalDate(nowDate);
   }, []);
 
   const onClickDelete = useCallback(async (id) => {
@@ -43,21 +45,19 @@ export const TodoItem: VFC<Props> = memo(({ id, name, date }) => {
         .doc(id)
         .delete()
         .then(() => {
-          console.log("delete!");
+          // console.log("delete!");
         });
     } else {
       return false;
     }
   }, []);
 
-  // useEffect(() => {
-  //   console.log("itemです！");
-  // });
-
   return (
     <SItem>
       <SName>{name}</SName>
-      <SDate>{date}</SDate>
+      <SDate>
+        <TodoDate date={originalDate} id={id} onChange={onChangeUpdate} />
+      </SDate>
       <SSince>
         <span className="label">前回から：</span>
         {timeGapInt}日
@@ -85,7 +85,7 @@ export const TodoItem: VFC<Props> = memo(({ id, name, date }) => {
 
 const SItem = styled.li`
   display: grid;
-  align-items: start;
+  align-items: center;
   grid-column-gap: 10px;
   grid-row-gap: 5px;
   padding: 10px;
@@ -105,11 +105,11 @@ const SItem = styled.li`
   }
   ${mediaQuery.lg} {
     grid-template-areas: "name date since . .";
-    grid-template-columns: 2fr 1fr 0.5fr 1fr 1fr;
+    grid-template-columns: 2fr 1.25fr 0.5fr 1fr 1fr;
   }
 `;
 
-const SItemData = styled.p`
+const SItemData = styled.div`
   /* padding: 5px 0; */
   ${mediaQuery.lg} {
     padding: 10px 0;

@@ -39,7 +39,7 @@ const STodoHead = styled.ul`
   display: none;
   ${mediaQuery.lg} {
     display: grid;
-    grid-template-columns: 2fr 1fr 0.5fr 1fr 1fr;
+    grid-template-columns: 2fr 1.25fr 0.5fr 1fr 1fr;
     grid-gap: 10px;
     padding: 20px 10px;
     border-bottom: 1px solid ${colors.gray03};

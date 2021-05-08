@@ -1,11 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useState,
-  ChangeEvent,
-  VFC,
-  memo,
-} from "react";
+import React, { useCallback, useContext, useState, VFC, memo } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import { db, firebaseTimestamp } from "../../firebase";
 import styled from "styled-components";
@@ -13,13 +6,7 @@ import { TodosContext } from "../../state/TodosProvider";
 import { AddTodoInput } from "../molecules/AddTodoInput";
 import { AddTodoButton } from "../atoms/AddTodoButton";
 import { colors, mediaQuery } from "../../styles/index";
-
-const now = new Date();
-const nowDate = [
-  now.getFullYear(),
-  ("0" + (now.getMonth() + 1)).slice(-2),
-  ("0" + now.getDate()).slice(-2),
-].join("-");
+import { nowDate } from "../../const/index";
 
 export const AddTodo: VFC = memo(() => {
   const { currentUser } = useContext(AuthContext);
@@ -27,13 +14,19 @@ export const AddTodo: VFC = memo(() => {
   const [name, setName] = useState<string>("");
   const [date, setDate] = useState<string>(nowDate);
 
-  const onChangeName = useCallback((e: ChangeEvent<HTMLInputElement>): void => {
-    setName(e.target.value);
-  }, []);
+  const onChangeName = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
+      setName(e.target.value);
+    },
+    []
+  );
 
-  const onChangeDate = useCallback((e: ChangeEvent<HTMLInputElement>): void => {
-    setDate(e.target.value);
-  }, []);
+  const onChangeDate = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
+      setDate(e.target.value);
+    },
+    []
+  );
 
   const onSubmitAdd = useCallback(
     (e) => {
