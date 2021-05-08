@@ -23,7 +23,7 @@ export const Header: React.FC = memo(() => {
     <SHeader>
       <SHeaderInner>
         <SHeaderLogo>
-          <Link to="/">home</Link>
+          <Link to="/">経過日数リスト</Link>
         </SHeaderLogo>
         <SHeaderContent>
           {isSignedIn || (
@@ -62,6 +62,10 @@ const SHeaderInner = styled.div`
 const SHeaderLogo = styled.div`
   color: ${colors.white01};
   font-weight: bold;
+  font-size: 12px;
+  ${mediaQuery.sm} {
+    font-size: 16px;
+  }
 `;
 const SHeaderContent = styled.div`
   button + button {

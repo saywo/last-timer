@@ -53,7 +53,7 @@ export const AuthProvider: VFC<Props> = memo(({ children }) => {
       history.push("/");
     } catch (error) {
       alert(error.message);
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -72,7 +72,7 @@ export const AuthProvider: VFC<Props> = memo(({ children }) => {
       history.push("/");
     } catch (error) {
       alert("ご入力いただいた情報が正しくありません");
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 
@@ -84,7 +84,7 @@ export const AuthProvider: VFC<Props> = memo(({ children }) => {
         history.push("/signin");
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
 
