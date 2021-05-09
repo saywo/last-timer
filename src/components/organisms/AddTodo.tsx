@@ -6,7 +6,7 @@ import { TodosContext } from "../../state/TodosProvider";
 import { AddTodoInput } from "../molecules/AddTodoInput";
 import { AddTodoButton } from "../atoms/AddTodoButton";
 import { colors, mediaQuery } from "../../styles/index";
-import { nowDate } from "../../const/index";
+import { nowDate, restrictDateInput } from "../../const/index";
 
 export const AddTodo: VFC = memo(() => {
   const { currentUser } = useContext(AuthContext);
@@ -30,7 +30,7 @@ export const AddTodo: VFC = memo(() => {
 
   const onSubmitAdd = useCallback(
     (e) => {
-      if (name !== "") {
+      if (name !== "" && restrictDateInput(date)) {
         const newTodo = {
           uid: currentUser,
           name: name,
@@ -49,8 +49,6 @@ export const AddTodo: VFC = memo(() => {
           .catch((error) => {
             console.error(error);
           });
-      } else {
-        alert("名前を入力してください");
       }
       return e.preventDefault();
     },
