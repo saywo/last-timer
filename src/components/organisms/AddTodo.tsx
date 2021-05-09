@@ -43,8 +43,8 @@ export const AddTodo: VFC = memo(() => {
             //stateの配列には、firestoreの配列にfirestoreのdocIdを追加
             const updatedTodos = [...todos, { ...newTodo, id: docRef.id }];
             setTodos(updatedTodos);
-            setName("");
-            setDate(nowDate);
+            setName(""); //inputの初期化
+            setDate(nowDate); //inputの初期化
           })
           .catch((error) => {
             console.error(error);
