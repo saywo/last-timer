@@ -1,4 +1,4 @@
-import React, { VFC, useContext, memo } from "react";
+import React, { VFC, useContext, useCallback, memo, useState } from "react";
 import styled from "styled-components";
 import { TodosContext } from "../../state/TodosProvider";
 import { TodoItem } from "../molecules/TodoItem";
@@ -6,22 +6,32 @@ import { colors, mediaQuery } from "../../styles/index";
 
 export const TodoList: VFC = memo(() => {
   const { todos, setTodos } = useContext(TodosContext);
-  const onClickSortDate = () => {
-    setTodos(
-      todos.sort((a, b) => {
-        if (a.date > b.date) {
-          return 1;
-        } else {
-          return -1;
-        }
-      })
-    );
-  };
+  const [sortedFlag, setSortedFlag] = useState(true);
+
+  const onClickSortDate = useCallback(() => {
+    const sortedTodos = todos;
+    const flag = sortedFlag ? 1 : -1;
+    sortedTodos.sort((a, b) => {
+      if (a.date > b.date) {
+        return -1 * flag;
+      } else {
+        return flag;
+      }
+    });
+    setSortedFlag(!sortedFlag);
+    setTodos(sortedTodos);
+  }, [todos, setTodos, sortedFlag]);
+
   return (
     <STodoInner>
       <STodoHead>
         <STodoHeadItem>名前</STodoHeadItem>
-        <STodoHeadItem onClick={onClickSortDate}>日付</STodoHeadItem>
+        <STodoHeadItem onClick={onClickSortDate}>
+          <button>
+            日付
+            <i className="fas fa-arrow-up" data-order={sortedFlag}></i>
+          </button>
+        </STodoHeadItem>
         <STodoHeadItem>前回から</STodoHeadItem>
       </STodoHead>
       <STodoList>
@@ -48,6 +58,15 @@ const STodoHead = styled.ul`
 
 const STodoHeadItem = styled.li`
   font-weight: bold;
+  .fas {
+    color: #ccc;
+    margin-left: 0.5em;
+    &[data-order="true"] {
+      transform: scale(1, -1);
+      filter: FlipV;
+      -ms-filter: "FlipV";
+    }
+  }
 `;
 
 const STodoList = styled.ul`

@@ -30,6 +30,13 @@ export const Home: VFC = memo(() => {
             date: `${data.date}`,
           });
         });
+        temp.sort((a, b) => {
+          if (a.date > b.date) {
+            return 1;
+          } else {
+            return -1;
+          }
+        });
         setTodos(temp);
       });
   };
