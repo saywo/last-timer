@@ -47,6 +47,12 @@ export const TodoDate: VFC<Props> = memo(
       [updateFirebaseDB]
     );
 
+    const dateFormatted = (date: string | undefined) => {
+      if (date) {
+        return date.split("-").join("q/");
+      }
+    };
+
     const editForm = isEdited ? (
       <>
         <SDateInput
@@ -67,7 +73,7 @@ export const TodoDate: VFC<Props> = memo(
     ) : (
       <>
         <SDateText onClick={onClickEditOn}>
-          <span>{date}</span>
+          <span>{dateFormatted(date)}</span>
           <button>
             <SIconEdit className="fas fa-pen" />
           </button>
