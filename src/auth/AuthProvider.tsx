@@ -84,7 +84,11 @@ export const AuthProvider: VFC<Props> = memo(({ children }) => {
         history.push("/signin");
       })
       .catch((error) => {
-        console.error(error);
+        if (error.code === "auth/user-not-found") {
+          alert("メールアドレスが登録されていません");
+        } else {
+          alert("メールアドレスが正しくありません");
+        }
       });
   };
 
