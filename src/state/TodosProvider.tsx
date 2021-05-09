@@ -5,6 +5,7 @@ import React, {
   useState,
   useContext,
   useEffect,
+  useCallback,
 } from "react";
 import { db } from "../firebase";
 import { AuthContext } from "../auth/AuthProvider";
@@ -53,7 +54,7 @@ export const TodosProvider: VFC<Props> = ({ children }) => {
       });
   };
 
-  const sortTodos = async () => {
+  const sortTodos = useCallback(async () => {
     const flag = sortFlag ? 1 : -1;
     const sortedTodos: Array<TodosProps> = await [...todos].sort((a, b) => {
       if (a.date > b.date) {
@@ -63,17 +64,17 @@ export const TodosProvider: VFC<Props> = ({ children }) => {
       }
     });
     await setTodos(sortedTodos);
-    console.log(todos);
-    console.log(sortFlag);
-  };
+    // eslint-disable-next-line
+  }, [sortFlag]);
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line
   }, [sortFlag, currentUser]);
 
   useEffect(() => {
     sortTodos();
-  }, [sortFlag]);
+  }, [sortTodos]);
 
   return (
     <TodosContext.Provider value={{ todos, setTodos, sortFlag, setSortFlag }}>
