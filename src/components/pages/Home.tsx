@@ -1,7 +1,5 @@
 import React, { useContext, VFC, useEffect, memo } from "react";
-import { db } from "../../firebase";
 import { AuthContext } from "../../auth/AuthProvider";
-import { TodosContext } from "../../state/TodosProvider";
 import { AddTodo } from "../organisms/AddTodo";
 import { TodoList } from "../organisms/TodoList";
 import { BlackBg } from "../templates/BlackBg";
@@ -9,46 +7,10 @@ import styled from "styled-components";
 import { colors, mediaQuery } from "../../styles/index";
 
 export const Home: VFC = memo(() => {
-  const { currentUser, isSignedIn } = useContext(AuthContext);
-  const { todos, setTodos } = useContext(TodosContext);
-
-  const fetchData = async () => {
-    let temp = todos;
-    temp.length = 0;
-    await db
-      .collection("todos")
-      .where("uid", "==", `${currentUser}`)
-      .orderBy("createdAt", "asc")
-      .onSnapshot((snapShot) => {
-        temp = [];
-        snapShot.forEach((doc) => {
-          const data = doc.data();
-          temp.push({
-            uid: currentUser,
-            id: `${doc.id}`,
-            name: `${data.name}`,
-            date: `${data.date}`,
-          });
-        });
-        temp.sort((a, b) => {
-          if (a.date > b.date) {
-            return 1;
-          } else {
-            return -1;
-          }
-        });
-        setTodos(temp);
-      });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [currentUser]);
+  const { isSignedIn } = useContext(AuthContext);
 
   return (
     <>
-      {/* {currentUser && <p>currentUser uid:{currentUser}</p>}
-      <p>isSingedIn:{isSignedIn.toString()}</p> */}
       {isSignedIn ? (
         <>
           <AddTodo />

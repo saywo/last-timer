@@ -1,26 +1,15 @@
-import React, { VFC, useContext, useCallback, memo, useState } from "react";
+import React, { VFC, useContext, useCallback, memo } from "react";
 import styled from "styled-components";
 import { TodosContext } from "../../state/TodosProvider";
 import { TodoItem } from "../molecules/TodoItem";
 import { colors, mediaQuery } from "../../styles/index";
 
 export const TodoList: VFC = memo(() => {
-  const { todos, setTodos } = useContext(TodosContext);
-  const [sortedFlag, setSortedFlag] = useState(true);
+  const { todos, sortFlag, setSortFlag } = useContext(TodosContext);
 
   const onClickSortDate = useCallback(() => {
-    const sortedTodos = todos;
-    const flag = sortedFlag ? 1 : -1;
-    sortedTodos.sort((a, b) => {
-      if (a.date > b.date) {
-        return -1 * flag;
-      } else {
-        return flag;
-      }
-    });
-    setSortedFlag(!sortedFlag);
-    setTodos(sortedTodos);
-  }, [todos, setTodos, sortedFlag]);
+    setSortFlag(!sortFlag);
+  }, [sortFlag, setSortFlag]);
 
   return (
     <STodoInner>
@@ -29,7 +18,7 @@ export const TodoList: VFC = memo(() => {
         <STodoHeadItem onClick={onClickSortDate}>
           <button>
             日付
-            <i className="fas fa-arrow-up" data-order={sortedFlag}></i>
+            <i className="fas fa-arrow-up" data-order={sortFlag}></i>
           </button>
         </STodoHeadItem>
         <STodoHeadItem>前回から</STodoHeadItem>
