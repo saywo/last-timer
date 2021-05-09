@@ -31,15 +31,15 @@ export const TodosContext = createContext({} as contextValue);
 
 export const TodosProvider: VFC<Props> = ({ children }) => {
   const [todos, setTodos] = useState<Array<TodosProps>>([]);
-  const [sortFlag, setSortFlag] = useState(true);
+  const [sortFlag, setSortFlag] = useState<boolean>(true);
   const { currentUser } = useContext(AuthContext);
 
   const fetchData = () => {
     db.collection("todos")
       .where("uid", "==", `${currentUser}`)
-      .orderBy("date", sortFlag ? "desc" : "asc")
+      .orderBy("date", sortFlag ? "asc" : "desc")
       .onSnapshot((snapShot) => {
-        const temp: any = [];
+        const temp: Array<TodosProps> = [];
         snapShot.forEach((doc) => {
           const data = doc.data();
           temp.push({
@@ -55,7 +55,7 @@ export const TodosProvider: VFC<Props> = ({ children }) => {
 
   const sortTodos = async () => {
     const flag = sortFlag ? 1 : -1;
-    const sortedTodos = await todos.sort((a, b) => {
+    const sortedTodos: Array<TodosProps> = await [...todos].sort((a, b) => {
       if (a.date > b.date) {
         return flag;
       } else {

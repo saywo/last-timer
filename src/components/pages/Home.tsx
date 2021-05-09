@@ -1,4 +1,4 @@
-import React, { useContext, VFC, useEffect, memo } from "react";
+import React, { useContext, VFC, memo } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import { AddTodo } from "../organisms/AddTodo";
 import { TodoList } from "../organisms/TodoList";
