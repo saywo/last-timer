@@ -1,1 +1,1 @@
-export { now, nowDate } from "./date";
+export { now, nowDate, restrictDateInput } from "./date";

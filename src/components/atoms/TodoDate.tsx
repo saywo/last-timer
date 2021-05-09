@@ -1,11 +1,11 @@
 import React, { VFC, useState, useCallback, memo } from "react";
 import { db } from "../../firebase";
-import { nowDate } from "../../const/index";
+import { nowDate, restrictDateInput } from "../../const/index";
 import styled from "styled-components";
 
 type InputProps = Omit<JSX.IntrinsicElements["input"], "ref">;
 type Props = InputProps & {
-  date: string | undefined;
+  date: string;
   id: string | undefined;
 };
 
@@ -15,16 +15,18 @@ export const TodoDate: VFC<Props> = memo(
 
     const updateFirebaseDB = useCallback(
       async (id: string | undefined) => {
-        await db
-          .collection("todos")
-          .doc(id)
-          .update({
-            date: date,
-          })
-          .then(() => {
-            // console.log(`update date ${date} !`);
-          });
-        setIsEdited(false);
+        if (restrictDateInput(date)) {
+          await db
+            .collection("todos")
+            .doc(id)
+            .update({
+              date: date,
+            })
+            .then(() => {
+              // console.log(`update date ${date} !`);
+            });
+          setIsEdited(false);
+        }
       },
       [date]
     );
@@ -58,7 +60,9 @@ export const TodoDate: VFC<Props> = memo(
         <SDateInput
           type="date"
           value={date}
+          min="1900-01-01"
           max={nowDate}
+          required
           onChange={onChange}
           onKeyUp={() => onKeyUpUpdate(id)}
           {...inputProps}
