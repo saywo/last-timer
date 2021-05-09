@@ -15,16 +15,18 @@ export const TodoDate: VFC<Props> = memo(
 
     const updateFirebaseDB = useCallback(
       async (id: string | undefined) => {
-        await db
-          .collection("todos")
-          .doc(id)
-          .update({
-            date: date,
-          })
-          .then(() => {
-            // console.log(`update date ${date} !`);
-          });
-        setIsEdited(false);
+        if (date !== "") {
+          await db
+            .collection("todos")
+            .doc(id)
+            .update({
+              date: date,
+            })
+            .then(() => {
+              // console.log(`update date ${date} !`);
+            });
+          setIsEdited(false);
+        }
       },
       [date]
     );
@@ -59,6 +61,7 @@ export const TodoDate: VFC<Props> = memo(
           type="date"
           value={date}
           max={nowDate}
+          required
           onChange={onChange}
           onKeyUp={() => onKeyUpUpdate(id)}
           {...inputProps}
