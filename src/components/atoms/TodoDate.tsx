@@ -49,7 +49,7 @@ export const TodoDate: VFC<Props> = memo(
 
     const dateFormatted = (date: string | undefined) => {
       if (date) {
-        return date.split("-").join("q/");
+        return date.split("-").join("/");
       }
     };
 
